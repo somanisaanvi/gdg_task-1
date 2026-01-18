@@ -1,18 +1,9 @@
-# ================================
-# AI Travel Planning Agent
-# ================================
-
 import streamlit as st
 
 from langchain_openai import ChatOpenAI
 from langchain.agents import initialize_agent, AgentType
 from langchain.memory import ConversationBufferMemory
 from langchain.tools import tool
-
-
-# ================================
-# TOOLS
-# ================================
 
 @tool
 def destination_search(destination: str) -> str:
@@ -35,10 +26,6 @@ def budget_estimator(days: int, total_budget: int) -> str:
 
 tools = [destination_search, budget_estimator]
 
-# ================================
-# LLM & MEMORY
-# ================================
-
 llm = ChatOpenAI(
     model="gpt-3.5-turbo",
     temperature=0.3
@@ -49,10 +36,6 @@ memory = ConversationBufferMemory(
     return_messages=True
 )
 
-# ================================
-# AGENT INITIALIZATION
-# ================================
-
 agent = initialize_agent(
     tools=tools,
     llm=llm,
@@ -60,10 +43,6 @@ agent = initialize_agent(
     memory=memory,
     verbose=True
 )
-
-# ================================
-# STREAMLIT UI
-# ================================
 
 st.set_page_config(
     page_title="AI Travel Planner ✈️",
